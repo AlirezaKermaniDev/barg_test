@@ -6,8 +6,8 @@ import 'package:email_validator/email_validator.dart';
 class Password extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
-  factory Password(String email) {
-    return Password._(validatePassword(email));
+  factory Password(String password) {
+    return Password._(validatePassword(password));
   }
   const Password._(this.value);
 
@@ -20,7 +20,7 @@ class Password extends ValueObject<String> {
     if (regExp.hasMatch(password)) {
       return Right(password);
     } else {
-      return Left(ValueFailure.invalidEmail(failedValue: password));
+      return Left(ValueFailure.invalidPassword(failedValue: password));
     }
   }
 }
