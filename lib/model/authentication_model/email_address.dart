@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:email_validator/email_validator.dart';
 
 class EmailAddress extends ValueObject<String> {
+  @override
   final Either<ValueFailure<String>, String> value;
   factory EmailAddress(String email) {
     return EmailAddress._(validateEmailAddress(email));
