@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 
 class AuthenticationService implements AuthenticationRepository {
   @override
-  Future<Either<AuthenticationFailure, bool>> logicWithEmailAndPassword(
+  Future<Either<AuthenticationFailure, bool>> loginWithEmailAndPassword(
       {required EmailAddress emailAddress, required Password password}) async {
     await Future.delayed(const Duration(seconds: 2));
     if (emailAddress.getDataOrCrash() == "kermani@gmail.com" &&

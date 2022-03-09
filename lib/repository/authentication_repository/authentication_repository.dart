@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:barg_test/core/failure/authentication_failure/authentication_failure.dart';
 
 abstract class AuthenticationRepository {
-  Future<Either<AuthenticationFailure, bool>> logicWithEmailAndPassword({
+  Future<Either<AuthenticationFailure, bool>> loginWithEmailAndPassword({
     required EmailAddress emailAddress,
     required Password password,
   });

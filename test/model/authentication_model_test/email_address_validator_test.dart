@@ -1,7 +1,6 @@
 import 'package:barg_test/core/assets.dart';
 import 'package:barg_test/core/failure/value_failure/value_failure.dart';
 import 'package:barg_test/model/authentication_model/email_address.dart';
-import 'package:barg_test/model/authentication_model/password.dart';
 import 'package:barg_test/model/friend_model/friend_model.dart';
 import 'package:barg_test/model/user_model/user_model.dart';
 import 'package:dartz/dartz.dart';
