@@ -7,4 +7,5 @@ part 'authentication_failure.freezed.dart';
 abstract class AuthenticationFailure with _$AuthenticationFailure {
   const factory AuthenticationFailure.wrongPasswordOrEmail() =
       WrongPasswordOrEmail;
+
 }

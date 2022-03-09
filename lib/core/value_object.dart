@@ -8,6 +8,11 @@ abstract class ValueObject<T> {
   const ValueObject();
   Either<ValueFailure<T>, T> get value;
 
+  T getDataOrCrash() {
+    // id = identity - same as writing (right) => right
+    return value.fold((l) => throw Exception("Unexpected Error"), id);
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
