@@ -8,5 +8,5 @@ import 'package:barg_test/core/failure/authentication_failure/authentication_fai
 abstract class UserRepository {
   Future<Either<UserFailure, List<User>>> getUsersList();
   Future<Either<UserFailure, User>> getOwnerUser();
-  Future<Either<UserFailure, User>> getUserbyId({required String id});
+  Future<Either<UserFailure, User>> getUserById({required String id});
 }

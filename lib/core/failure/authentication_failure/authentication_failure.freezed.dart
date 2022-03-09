@@ -100,22 +100,12 @@ class _$WrongPasswordOrEmailCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$WrongPasswordOrEmail
-    with DiagnosticableTreeMixin
-    implements WrongPasswordOrEmail {
+class _$WrongPasswordOrEmail implements WrongPasswordOrEmail {
   const _$WrongPasswordOrEmail();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AuthenticationFailure.wrongPasswordOrEmail()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty(
-          'type', 'AuthenticationFailure.wrongPasswordOrEmail'));
   }
 
   @override

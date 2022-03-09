@@ -17,7 +17,7 @@ class UserService implements UserRepository {
   }
 
   @override
-  Future<Either<UserFailure, User>> getUserbyId({required String id}) async {
+  Future<Either<UserFailure, User>> getUserById({required String id}) async {
     try {
       final result = await getUsersList();
       return result.fold((l) => Left(l), (users) {
