@@ -1,13 +1,19 @@
+import 'package:barg_test/dependency_injection.dart';
 import 'package:barg_test/model/authentication_model/email_address.dart';
 import 'package:barg_test/model/authentication_model/password.dart';
+import 'package:barg_test/repository/authentication_repository/authentication_repository.dart';
 import 'package:barg_test/service/authentication_service/authentication_service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:barg_test/core/failure/authentication_failure/authentication_failure.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  init();
   group('Autentication service test', () {
-    AuthenticationService authenticationService = AuthenticationService();
+    AuthenticationRepository authenticationService =
+        di<AuthenticationRepository>();
 
     test(
         "Autentication service should return failure with wrong password and email",

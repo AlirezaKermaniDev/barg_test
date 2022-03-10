@@ -1,7 +1,9 @@
 import 'package:barg_test/core/failure/user_failure/user_failure.dart';
+import 'package:barg_test/dependency_injection.dart';
 import 'package:barg_test/model/authentication_model/email_address.dart';
 import 'package:barg_test/model/authentication_model/password.dart';
 import 'package:barg_test/model/user_model/user_model.dart';
+import 'package:barg_test/repository/user_repository/user_repository.dart';
 import 'package:barg_test/service/authentication_service/authentication_service.dart';
 import 'package:barg_test/service/user_service/user_service.dart';
 import 'package:dartz/dartz.dart';
@@ -10,9 +12,10 @@ import 'package:barg_test/core/failure/authentication_failure/authentication_fai
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  init();
 
   group('User service test', () {
-    UserService userService = UserService();
+    UserRepository userService = di<UserRepository>();
 
     test("The 'getUsersList' function should return list of User Object",
         () async {

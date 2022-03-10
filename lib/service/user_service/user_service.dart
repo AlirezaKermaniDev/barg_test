@@ -7,6 +7,8 @@ import 'package:dartz/dartz.dart';
 class UserService implements UserRepository {
   @override
   Future<Either<UserFailure, User>> getOwnerUser() async {
+    await Future.delayed(const Duration(seconds: 2));
+
     try {
       final result = await getUsersList();
       return result.fold(
@@ -18,6 +20,8 @@ class UserService implements UserRepository {
 
   @override
   Future<Either<UserFailure, User>> getUserById({required String id}) async {
+    await Future.delayed(const Duration(seconds: 2));
+
     try {
       final result = await getUsersList();
       return result.fold((l) => Left(l), (users) {
@@ -36,15 +40,22 @@ class UserService implements UserRepository {
 
   @override
   Future<Either<UserFailure, List<User>>> getUsersList() async {
+    await Future.delayed(const Duration(seconds: 2));
+
     try {
       List data = await parseJsonListFromAssets(AssetsPath.userProfilesJson);
-      List<User> users = <User>[];
-      for (var item in data) {
-        users.add(User.fromJson(item));
-      }
+      List<User> users = fetchUsers(data);
       return Right(users);
     } catch (e) {
       return const Left(UserFailure.failTofetchData());
     }
+  }
+
+  List<User> fetchUsers(List<dynamic> data) {
+    List<User> users = <User>[];
+    for (var item in data) {
+      users.add(User.fromJson(item));
+    }
+    return users;
   }
 }
