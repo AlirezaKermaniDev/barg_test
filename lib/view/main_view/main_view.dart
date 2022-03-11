@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:barg_test/core/assets.dart';
 import 'package:barg_test/model/user_model/user_model.dart';
 import 'package:barg_test/view/widgets/full_screen_loading_widget..dart';
-import 'package:barg_test/view/widgets/glass_widget.dart';
+import 'package:barg_test/view/widgets/image_loader_widget.dart';
 import 'package:barg_test/view_model/main_view_model/main_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
@@ -71,15 +68,8 @@ class MainView extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
-                    height: 60.0,
-                    width: 60.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: NetworkImage(user.picture!),
-                      ),
-                    ),
+                  ImageLoaderWidget(
+                    url: user.picture ?? "",
                   ),
                   const SizedBox(
                     width: 10.0,
@@ -135,25 +125,28 @@ class MainView extends StatelessWidget {
     );
   }
 
-  Container _appBarWidget() {
-    return Container(
-        width: Get.width,
-        height: 120.0,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(AssetsPath.loginBackgroundImage),
-                fit: BoxFit.cover),
-            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)]),
-        alignment: Alignment.center,
-        child: GetBuilder<MainViewModel>(builder: (controller) {
-          if (controller.ownerUser == null) {
-            return _ownerUserSkeletonWidget();
-          }
-          return _ownerUserWidget(controller);
-        }));
+  GestureDetector _appBarWidget() {
+    return GestureDetector(
+      onTap: controller.onAppBarTap,
+      child: Container(
+          width: Get.width,
+          height: 120.0,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(AssetsPath.loginBackgroundImage),
+                  fit: BoxFit.cover),
+              boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)]),
+          alignment: Alignment.center,
+          child: GetBuilder<MainViewModel>(builder: (controller) {
+            if (controller.ownerUser == null) {
+              return _ownerUserSkeletonWidget();
+            }
+            return _ownerUserWidget();
+          })),
+    );
   }
 
-  Padding _ownerUserWidget(MainViewModel controller) {
+  Padding _ownerUserWidget() {
     return Padding(
       padding: const EdgeInsets.only(right: 25.0, left: 32.0, top: 40.0),
       child: Column(
@@ -165,15 +158,8 @@ class MainView extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 60.0,
-                    width: 60.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: NetworkImage(controller.ownerUser!.picture!),
-                      ),
-                    ),
+                  ImageLoaderWidget(
+                    url: controller.ownerUser?.picture ?? "",
                   ),
                   const SizedBox(
                     width: 10.0,

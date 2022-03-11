@@ -17,6 +17,7 @@ class GlassWidget extends StatelessWidget {
     this.borderRadius,
     this.blurBar,
   }) : super(key: key);
+  bool get isFullScreen => height == Get.height;
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +27,38 @@ class GlassWidget extends StatelessWidget {
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Container(
-            height: 100.0,
+          _bottomShadowWidget(),
+          _topShadowWidget(),
+          _blurWidget(),
+        ],
+      ),
+    );
+  }
+
+  ClipRRect _blurWidget() {
+    return ClipRRect(
+      borderRadius: borderRadius ?? BorderRadius.circular(35.0),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: blurBar ?? 15,
+          sigmaY: blurBar ?? 15,
+        ),
+        child: Container(
             width: width ?? Get.width * .8,
+            height: height ?? Get.height * .8,
             decoration: BoxDecoration(
-                borderRadius: borderRadius ?? BorderRadius.circular(35.0),
-                gradient: LinearGradient(colors: [
-                  Colors.white.withOpacity(0.4),
-                  Colors.white.withOpacity(0.0)
-                ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
-          ),
-          Align(
+              color: Colors.white.withOpacity(0.20),
+            ),
+            alignment: Alignment.center,
+            child: child),
+      ),
+    );
+  }
+
+  SingleChildRenderObjectWidget _topShadowWidget() {
+    return isFullScreen
+        ? const SizedBox()
+        : Align(
             alignment: Alignment.topCenter,
             child: Container(
               height: 100.0,
@@ -51,26 +73,21 @@ class GlassWidget extends StatelessWidget {
                     0.2
                   ], end: Alignment.bottomCenter, begin: Alignment.topCenter)),
             ),
-          ),
-          ClipRRect(
-            borderRadius: borderRadius ?? BorderRadius.circular(35.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: blurBar ?? 15,
-                sigmaY: blurBar ?? 15,
-              ),
-              child: Container(
-                  width: width ?? Get.width * .8,
-                  height: height ?? Get.height * .8,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.20),
-                  ),
-                  alignment: Alignment.center,
-                  child: child),
-            ),
-          ),
-        ],
-      ),
-    );
+          );
+  }
+
+  Widget _bottomShadowWidget() {
+    return isFullScreen
+        ? const SizedBox()
+        : Container(
+            height: 100.0,
+            width: width ?? Get.width * .8,
+            decoration: BoxDecoration(
+                borderRadius: borderRadius ?? BorderRadius.circular(35.0),
+                gradient: LinearGradient(colors: [
+                  Colors.white.withOpacity(0.4),
+                  Colors.white.withOpacity(0.0)
+                ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
+          );
   }
 }

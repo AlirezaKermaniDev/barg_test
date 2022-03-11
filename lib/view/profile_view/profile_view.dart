@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:barg_test/core/assets.dart';
 import 'package:barg_test/model/friend_model/friend_model.dart';
 import 'package:barg_test/view/widgets/full_screen_loading_widget..dart';
+import 'package:barg_test/view/widgets/image_loader_widget.dart';
 import 'package:barg_test/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -120,7 +121,7 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget _userFriendsWidget() {
-    return controller.user?.friends == null || controller.user!.friends!.isEmpty
+    return isFriendsEmpty
         ? const SizedBox()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,6 +147,9 @@ class ProfileView extends StatelessWidget {
             ],
           );
   }
+
+  bool get isFriendsEmpty =>
+      controller.user?.friends == null || controller.user!.friends!.isEmpty;
 
   Column _userDetailsWidget() {
     return Column(
@@ -201,13 +205,13 @@ class ProfileView extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border.all(color: Colors.black, width: 3.0),
           shape: BoxShape.circle),
-      child: Container(
-        margin: const EdgeInsets.all(3.0),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(controller.user!.picture!),
-                fit: BoxFit.cover),
-            shape: BoxShape.circle),
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: ImageLoaderWidget(
+          url: controller.user?.picture ?? "",
+          height: 120.0,
+          width: 120.0,
+        ),
       ),
     );
   }

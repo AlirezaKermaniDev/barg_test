@@ -18,6 +18,14 @@ class MainViewModel extends GetxController {
     update();
   }
 
+  void onAppBarTap() {
+    if(ownerUser != null){
+
+    Get.toNamed(ProfileView.path,
+        arguments: ownerUser, preventDuplicates: false);
+    }
+  }
+
   Future<void> getUsersList() async {
     Either<UserFailure, List<User>> result = await getUsersListRequest();
     checkGetUsersListRequesrResult(result);
@@ -70,7 +78,7 @@ class MainViewModel extends GetxController {
     result.fold((failure) {
       showSnackBar(Messages.userFailureToMessage[failure]!);
     }, (user) {
-      Get.toNamed(ProfileView.path, arguments: user,preventDuplicates: false);
+      Get.toNamed(ProfileView.path, arguments: user, preventDuplicates: false);
     });
   }
 

@@ -1,3 +1,4 @@
+import 'package:barg_test/view/login_view/login_view.dart';
 import 'package:barg_test/view/main_view/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,7 @@ void main() {
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: MainView.path,
+      initialRoute: LoginView.path,
       theme: themeData,
       getPages: pages,
     ),
