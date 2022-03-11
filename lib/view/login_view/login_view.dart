@@ -108,7 +108,8 @@ class LoginView extends GetView<LoginViewModel> {
             controller.isEmailAndPasswordValid() ? controller.loginToApp : null,
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.black26),
-          elevation: MaterialStateProperty.all(6.0),
+          elevation: MaterialStateProperty.all(
+              controller.isEmailAndPasswordValid() ? 5.0 : 0.0),
           shape: MaterialStateProperty.all(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
           backgroundColor: MaterialStateProperty.all(Colors.white),

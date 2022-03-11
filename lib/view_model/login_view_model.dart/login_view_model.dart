@@ -4,9 +4,11 @@ import 'package:barg_test/dependency_injection.dart';
 import 'package:barg_test/model/authentication_model/email_address.dart';
 import 'package:barg_test/model/authentication_model/password.dart';
 import 'package:barg_test/repository/authentication_repository/authentication_repository.dart';
+import 'package:barg_test/view/main_view/main_view.dart';
 import 'package:barg_test/view_model/utils/show_snack_bar.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginViewModel extends GetxController {
@@ -66,7 +68,12 @@ class LoginViewModel extends GetxController {
     result.fold((failure) {
       showSnackBar(Messages.authenticationFailureToMessage[failure]!);
     }, (status) {
-      Get.snackbar("System", "Loggedin");
+      Get.snackbar("System", "Loggedin",
+          icon: Icon(
+            Icons.check,
+            color: Colors.greenAccent[400],
+          ));
+      Get.offAllNamed(MainView.path);
     });
   }
 

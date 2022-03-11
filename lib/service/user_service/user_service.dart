@@ -7,8 +7,6 @@ import 'package:dartz/dartz.dart';
 class UserService implements UserRepository {
   @override
   Future<Either<UserFailure, User>> getOwnerUser() async {
-    await Future.delayed(const Duration(seconds: 2));
-
     try {
       final result = await getUsersList();
       return result.fold(
