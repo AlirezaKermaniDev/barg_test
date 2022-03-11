@@ -6,12 +6,16 @@ import 'package:get/get.dart';
 class GlassWidget extends StatelessWidget {
   final double? height;
   final double? width;
+  final double? blurBar;
+  final BorderRadius? borderRadius;
   final Widget child;
   const GlassWidget({
     Key? key,
     required this.child,
     this.height,
     this.width,
+    this.borderRadius,
+    this.blurBar,
   }) : super(key: key);
 
   @override
@@ -26,7 +30,7 @@ class GlassWidget extends StatelessWidget {
             height: 100.0,
             width: width ?? Get.width * .8,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35.0),
+                borderRadius: borderRadius ?? BorderRadius.circular(35.0),
                 gradient: LinearGradient(colors: [
                   Colors.white.withOpacity(0.4),
                   Colors.white.withOpacity(0.0)
@@ -38,7 +42,7 @@ class GlassWidget extends StatelessWidget {
               height: 100.0,
               width: width ?? Get.width * .8,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35.0),
+                  borderRadius: borderRadius ?? BorderRadius.circular(35.0),
                   gradient: LinearGradient(colors: [
                     Colors.white.withOpacity(0.8),
                     Colors.white.withOpacity(0.0),
@@ -49,11 +53,11 @@ class GlassWidget extends StatelessWidget {
             ),
           ),
           ClipRRect(
-            borderRadius: BorderRadius.circular(35.0),
+            borderRadius: borderRadius ?? BorderRadius.circular(35.0),
             child: BackdropFilter(
               filter: ImageFilter.blur(
-                sigmaX: 15,
-                sigmaY: 15,
+                sigmaX: blurBar ?? 15,
+                sigmaY: blurBar ?? 15,
               ),
               child: Container(
                   width: width ?? Get.width * .8,

@@ -3,13 +3,20 @@ import 'package:barg_test/core/messages.dart';
 import 'package:barg_test/dependency_injection.dart';
 import 'package:barg_test/model/user_model/user_model.dart';
 import 'package:barg_test/repository/user_repository/user_repository.dart';
+import 'package:barg_test/view/profile_view/profile_view.dart';
 import 'package:barg_test/view_model/utils/show_snack_bar.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
 class MainViewModel extends GetxController {
+  bool isLoading = false;
   List<User> usersList = <User>[];
   User? ownerUser;
+
+  void changeIsLoadingStatus(bool status) {
+    isLoading = status;
+    update();
+  }
 
   Future<void> getUsersList() async {
     Either<UserFailure, List<User>> result = await getUsersListRequest();
@@ -47,6 +54,28 @@ class MainViewModel extends GetxController {
 
   Future<Either<UserFailure, User>> getOwnerUsersRequest() async {
     final result = await di<UserRepository>().getOwnerUser();
+    return result;
+  }
+
+  Future<void> getUserById(String userId) async {
+    changeIsLoadingStatus(true);
+
+    Either<UserFailure, User> result = await getUserByIdRequest(userId);
+    checkGetUserByIdRequesrResult(result);
+  }
+
+  void checkGetUserByIdRequesrResult(Either<UserFailure, User> result) {
+    changeIsLoadingStatus(false);
+
+    result.fold((failure) {
+      showSnackBar(Messages.userFailureToMessage[failure]!);
+    }, (user) {
+      Get.toNamed(ProfileView.path, arguments: user,preventDuplicates: false);
+    });
+  }
+
+  Future<Either<UserFailure, User>> getUserByIdRequest(String userId) async {
+    final result = await di<UserRepository>().getUserById(id: userId);
     return result;
   }
 

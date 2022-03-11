@@ -2,15 +2,18 @@ import 'dart:ui';
 
 import 'package:barg_test/core/assets.dart';
 import 'package:barg_test/model/user_model/user_model.dart';
-import 'package:barg_test/view_model/main_view_model.dart/main_view_model.dart';
+import 'package:barg_test/view/widgets/full_screen_loading_widget..dart';
+import 'package:barg_test/view/widgets/glass_widget.dart';
+import 'package:barg_test/view_model/main_view_model/main_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
-class MainView extends GetView<MainViewModel> {
+class MainView extends StatelessWidget {
   static const path = "/MainView";
-
-  const MainView({Key? key}) : super(key: key);
+  final controller = Get.put<MainViewModel>(MainViewModel());
+  MainView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +21,23 @@ class MainView extends GetView<MainViewModel> {
         body: Stack(
       children: [
         _usersListWidget(),
+        _loadingWidget(),
         _appBarWidget(),
       ],
     ));
+  }
+
+  GetBuilder<MainViewModel> _loadingWidget() {
+    return GetBuilder<MainViewModel>(builder: (controller) {
+      if (controller.isLoading) {
+        return const Padding(
+          padding: EdgeInsets.only(top: 120.0),
+          child: FullScreenLoadingWidget(),
+        );
+      } else {
+        return const SizedBox();
+      }
+    });
   }
 
   SizedBox _usersListWidget() {
@@ -47,68 +64,73 @@ class MainView extends GetView<MainViewModel> {
   Padding _usersListItemWidget(User user) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
-      child: Column(
-        children: [
-          Row(
+      child: InkWell(
+        onTap: () => controller.getUserById(user.guid ?? ""),
+        child: Ink(
+          child: Column(
             children: [
-              Container(
-                height: 60.0,
-                width: 60.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(user.picture!),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Text(
-                    user.name!,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.black),
-                  ),
-                  const SizedBox(height: 2.0),
-                  SizedBox(
-                    width: Get.width * 0.6,
-                    child: Text(
-                      user.email!,
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                          color: Colors.black),
+                  Container(
+                    height: 60.0,
+                    width: 60.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage(user.picture!),
+                      ),
                     ),
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        user.name!,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.black),
+                      ),
+                      const SizedBox(height: 2.0),
+                      SizedBox(
+                        width: Get.width * 0.6,
+                        child: Text(
+                          user.email!,
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: Colors.black),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
+              const SizedBox(height: 6.0),
+              SizedBox(
+                width: Get.width,
+                child: Text(
+                  "Address : " + user.address!,
+                  textAlign: TextAlign.start,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15,
+                      color: Colors.black),
+                ),
+              ),
+              const SizedBox(height: 8.0),
+              const Divider()
             ],
           ),
-          const SizedBox(height: 6.0),
-          SizedBox(
-            width: Get.width,
-            child: Text(
-              "Address : " + user.address!,
-              textAlign: TextAlign.start,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                  color: Colors.black),
-            ),
-          ),
-          const SizedBox(height: 8.0),
-          const Divider()
-        ],
+        ),
       ),
     );
   }

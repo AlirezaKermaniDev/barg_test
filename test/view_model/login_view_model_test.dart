@@ -2,7 +2,7 @@ import 'package:barg_test/core/messages.dart';
 import 'package:barg_test/dependency_injection.dart';
 import 'package:barg_test/model/authentication_model/email_address.dart';
 import 'package:barg_test/model/authentication_model/password.dart';
-import 'package:barg_test/view_model/login_view_model.dart/login_view_model.dart';
+import 'package:barg_test/view_model/login_view_model/login_view_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';

@@ -3,14 +3,15 @@ import 'dart:ui';
 import 'package:barg_test/core/assets.dart';
 import 'package:barg_test/view/widgets/glass_widget.dart';
 import 'package:barg_test/view/widgets/text_field_widget.dart';
-import 'package:barg_test/view_model/login_view_model.dart/login_view_model.dart';
+import 'package:barg_test/view_model/login_view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class LoginView extends GetView<LoginViewModel> {
+class LoginView extends StatelessWidget {
   static const path = "/LoginView";
-  const LoginView({Key? key}) : super(key: key);
+  final controller = Get.put<LoginViewModel>(LoginViewModel());
+  LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -119,15 +120,7 @@ class LoginView extends GetView<LoginViewModel> {
                   : Colors.grey),
         ),
         child: controller.isLogging
-            ? SpinKitWave(
-                size: 20.0,
-                itemCount: 4,
-                itemBuilder: (context, index) => Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      color: Colors.black),
-                ),
-              )
+            ? _logginLoadingWidget()
             : const Text(
                 "Log in",
                 style: TextStyle(
@@ -137,6 +130,17 @@ class LoginView extends GetView<LoginViewModel> {
               ),
       );
     });
+  }
+
+  SpinKitWave _logginLoadingWidget() {
+    return SpinKitWave(
+      size: 20.0,
+      itemCount: 4,
+      itemBuilder: (context, index) => Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0), color: Colors.black),
+      ),
+    );
   }
 
   Column _glassBodyTextFieldsWidget() {
