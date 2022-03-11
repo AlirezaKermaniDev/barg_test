@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class ProfileView extends StatelessWidget {
   static const path = "/ProfileView";
   final controller =
-      Get.put<ProfieViewModel>(ProfieViewModel(), tag: Get.arguments.guid);
+      Get.put<ProfileViewModel>(ProfileViewModel(), tag: Get.arguments.guid);
 
   ProfileView({Key? key}) : super(key: key);
 
@@ -40,9 +40,9 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  GetBuilder<ProfieViewModel> _loadingWidget() {
-    return GetBuilder<ProfieViewModel>(
-        init: ProfieViewModel(),
+  GetBuilder<ProfileViewModel> _loadingWidget() {
+    return GetBuilder<ProfileViewModel>(
+        init: ProfileViewModel(),
         tag: Get.arguments.guid,
         builder: (controller) {
           if (controller.isLoading) {
@@ -109,7 +109,7 @@ class ProfileView extends StatelessWidget {
             ),
           ),
           Text(
-            controller.user.greeting ?? "",
+            controller.user?.greeting ?? "",
             textAlign: TextAlign.start,
             style: const TextStyle(
                 fontWeight: FontWeight.w500, fontSize: 16, color: Colors.black),
@@ -120,7 +120,7 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget _userFriendsWidget() {
-    return controller.user.friends == null || controller.user.friends!.isEmpty
+    return controller.user?.friends == null || controller.user!.friends!.isEmpty
         ? const SizedBox()
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +138,7 @@ class ProfileView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: Wrap(
-                  children: controller.user.friends!
+                  children: controller.user!.friends!
                       .map((freind) => _feriendsItemWidget(freind))
                       .toList(),
                 ),
@@ -150,13 +150,13 @@ class ProfileView extends StatelessWidget {
   Column _userDetailsWidget() {
     return Column(
       children: [
-        _userDetailWidget("Age", controller.user.age!.toString()),
-        _userDetailWidget("Phone number", controller.user.phone!),
-        _userDetailWidget("Gender", controller.user.gender!),
-        _userDetailWidget("Eye color", controller.user.eyeColor!),
-        _userDetailWidget("Company", controller.user.company!),
-        _userDetailWidget("Favorite fruit", controller.user.favoriteFruit!),
-        _userDetailWidget("Address", controller.user.address!),
+        _userDetailWidget("Age", controller.user!.age!.toString()),
+        _userDetailWidget("Phone number", controller.user!.phone!),
+        _userDetailWidget("Gender", controller.user!.gender!),
+        _userDetailWidget("Eye color", controller.user!.eyeColor!),
+        _userDetailWidget("Company", controller.user!.company!),
+        _userDetailWidget("Favorite fruit", controller.user!.favoriteFruit!),
+        _userDetailWidget("Address", controller.user!.address!),
         _editButtonWidget(),
       ],
     );
@@ -171,7 +171,7 @@ class ProfileView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
-              controller.user.name!,
+              controller.user!.name!,
               style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -181,7 +181,7 @@ class ProfileView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
             child: Text(
-              controller.user.email!,
+              controller.user!.email!,
               style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 17,
@@ -205,7 +205,7 @@ class ProfileView extends StatelessWidget {
         margin: const EdgeInsets.all(3.0),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: NetworkImage(controller.user.picture!),
+                image: NetworkImage(controller.user!.picture!),
                 fit: BoxFit.cover),
             shape: BoxShape.circle),
       ),
@@ -263,7 +263,7 @@ class ProfileView extends StatelessWidget {
   }
 
   SingleChildRenderObjectWidget _editButtonWidget() {
-    return controller.user.isOwner!
+    return controller.user!.isOwner!
         ? Padding(
             padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
             child: SizedBox(

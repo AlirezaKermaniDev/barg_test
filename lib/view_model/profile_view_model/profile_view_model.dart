@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 
 import '../../dependency_injection.dart';
 
-class ProfieViewModel extends GetxController {
-  late User user;
+class ProfileViewModel extends GetxController {
+  late User? user;
   bool isLoading = false;
 
   onBack() {
@@ -35,7 +35,11 @@ class ProfieViewModel extends GetxController {
     result.fold((failure) {
       showSnackBar(Messages.userFailureToMessage[failure]!);
     }, (user) {
-      Get.toNamed(ProfileView.path, arguments: user, preventDuplicates: false,);
+      Get.toNamed(
+        ProfileView.path,
+        arguments: user,
+        preventDuplicates: false,
+      );
     });
   }
 
@@ -44,9 +48,13 @@ class ProfieViewModel extends GetxController {
     return result;
   }
 
+  User? getArguments() {
+    return Get.arguments;
+  }
+
   @override
   void onInit() {
-    user = Get.arguments;
+    user = getArguments();
     super.onInit();
   }
 }
