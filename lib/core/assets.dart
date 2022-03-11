@@ -4,9 +4,10 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class AssetsPath {
   static const _assetsPath = "assets/";
-  static const _folderPath = "json/";
-  static const userProfilesJson =
-      _assetsPath + _folderPath + "user_profile.json";
+  static const _jsonFolderPath = _assetsPath + "json/";
+  static const _imageFolderPath = _assetsPath + "images/";
+  static const userProfilesJson = _jsonFolderPath + "user_profile.json";
+  static const loginBackgroundImage = _imageFolderPath + "login_background.png";
 }
 
 Future<Map<String, dynamic>> parseJsonObjectFromAssets(
