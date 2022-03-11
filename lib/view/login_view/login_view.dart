@@ -73,7 +73,6 @@ class LoginView extends StatelessWidget {
             width: Get.width,
             child: _loginButtonWidget(),
           ),
-      
         ],
       ),
     );
@@ -82,8 +81,9 @@ class LoginView extends StatelessWidget {
   GetBuilder<LoginViewModel> _loginButtonWidget() {
     return GetBuilder<LoginViewModel>(builder: (controller) {
       return ElevatedButton(
-        onPressed:
-            controller.isEmailAndPasswordValid() ? controller.loginToApp : null,
+        onPressed: controller.isEmailAndPasswordValid() && !controller.isLogging
+            ? controller.loginToApp
+            : null,
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.black26),
           elevation: MaterialStateProperty.all(
