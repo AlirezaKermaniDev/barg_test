@@ -46,7 +46,7 @@ class MainView extends StatelessWidget {
             itemCount:
                 controller.usersList.isEmpty ? 5 : controller.usersList.length,
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.only(top: 120.0, right: 32.0, left: 32.0),
+            padding: const EdgeInsets.only(top: 128.0, right: 32.0, left: 32.0),
             itemBuilder: (context, index) {
               if (controller.usersList.isEmpty) {
                 return _usersListItemSkeletonWidget();

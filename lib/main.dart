@@ -1,6 +1,7 @@
 import 'package:barg_test/view/login_view/login_view.dart';
 import 'package:barg_test/view/main_view/main_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'core/pages.dart';
@@ -9,6 +10,10 @@ import 'dependency_injection.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeRight,
+    DeviceOrientation.landscapeLeft,
+  ]);
   init();
   runApp(
     GetMaterialApp(

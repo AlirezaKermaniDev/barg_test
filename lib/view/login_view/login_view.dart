@@ -73,30 +73,7 @@ class LoginView extends StatelessWidget {
             width: Get.width,
             child: _loginButtonWidget(),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  "Don`t have an account? ",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      color: Colors.white),
-                ),
-                Text(
-                  "Create New",
-                  style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      color: Colors.white),
-                ),
-              ],
-            ),
-          ),
+      
         ],
       ),
     );
