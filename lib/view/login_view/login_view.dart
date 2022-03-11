@@ -6,6 +6,7 @@ import 'package:barg_test/view/widgets/text_field_widget.dart';
 import 'package:barg_test/view_model/login_view_model.dart/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoginView extends GetView<LoginViewModel> {
   static const path = "/LoginView";
@@ -69,64 +70,80 @@ class LoginView extends GetView<LoginViewModel> {
           SizedBox(
             height: 45.0,
             width: Get.width,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                  elevation: MaterialStateProperty.all(6.0),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-                  backgroundColor: MaterialStateProperty.all(Colors.white)),
-              child: const Text(
-                "Log in",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.black),
-              ),
+            child: _loginButtonWidget(),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  "Don`t have an account? ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15,
+                      color: Colors.white),
+                ),
+                Text(
+                  "Create New",
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 15,
+                      color: Colors.white),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 16.0,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
-                "Don`t have an account? ",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15,
-                    color: Colors.white),
-              ),
-              Text(
-                "Create New",
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15,
-                    color: Colors.white),
-              ),
-            ],
           ),
         ],
       ),
     );
   }
 
+  GetBuilder<LoginViewModel> _loginButtonWidget() {
+    return GetBuilder<LoginViewModel>(builder: (controller) {
+      return ElevatedButton(
+        onPressed:
+            controller.isEmailAndPasswordValid() ? controller.loginToApp : null,
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.black26),
+          elevation: MaterialStateProperty.all(6.0),
+          shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+          backgroundColor: MaterialStateProperty.all(Colors.white),
+          foregroundColor: MaterialStateProperty.all(
+              controller.isEmailAndPasswordValid()
+                  ? Colors.black
+                  : Colors.grey),
+        ),
+        child: controller.isLogging
+            ? SpinKitWave(
+                size: 20.0,
+                itemCount: 4,
+                itemBuilder: (context, index) => Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.black),
+                ),
+              )
+            : const Text(
+                "Log in",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+      );
+    });
+  }
+
   Column _glassBodyTextFieldsWidget() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
-      children: const [
-        Padding(
-          padding: EdgeInsets.only(bottom: 28.0),
-          child: TextFieldWidget(hint: "Email"),
-        ),
-        Padding(
-          padding: EdgeInsets.only(bottom: 16.0),
-          child: TextFieldWidget(hint: "Password"),
-        ),
-        Text(
+      children: [
+        _textFeildsWidget(),
+        const Text(
           "Forgot password?",
           style: TextStyle(
               decoration: TextDecoration.underline,
@@ -136,6 +153,30 @@ class LoginView extends GetView<LoginViewModel> {
         ),
       ],
     );
+  }
+
+  GetBuilder<LoginViewModel> _textFeildsWidget() {
+    return GetBuilder<LoginViewModel>(builder: (controller) {
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 28.0),
+            child: TextFieldWidget(
+              hint: "Email",
+              controller: controller.emailController,
+              errorText: controller.emailFieldErrorText,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: TextFieldWidget(
+                hint: "Password",
+                controller: controller.passwordController,
+                errorText: controller.passwordFieldErrorText),
+          ),
+        ],
+      );
+    });
   }
 
   Text _glassBodyHeaderWidget() {

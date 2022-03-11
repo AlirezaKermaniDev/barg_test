@@ -24,7 +24,7 @@ class UserService implements UserRepository {
 
     try {
       final result = await getUsersList();
-      return result.fold((l) => Left(l), (users) {
+      return result.fold((failure) => Left(failure), (users) {
         List<User> usersById = users.where((user) => user.guid == id).toList();
 
         if (usersById.isEmpty) {
