@@ -11,7 +11,7 @@ import 'package:barg_test/core/failure/authentication_failure/authentication_fai
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   init();
-  group('Login model view test', () {
+  group('Login view model test', () {
     LoginViewModel loginViewModel = Get.put(LoginViewModel());
 
     test(

@@ -30,7 +30,7 @@ class MainViewModel extends GetxController {
     return result;
   }
 
-  Future<void> getOwnerUsers() async {
+  Future<void> getOwnerUser() async {
     Either<UserFailure, User> result = await getOwnerUsersRequest();
     checkGetOwnerUsersRequesrResult(result);
   }
@@ -52,8 +52,8 @@ class MainViewModel extends GetxController {
 
   @override
   void onReady() {
+    getOwnerUser();
     getUsersList();
-    getOwnerUsers();
     super.onReady();
   }
 }
